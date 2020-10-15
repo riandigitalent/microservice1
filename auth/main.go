@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/riandigitalent/microservice/auth/handler"
+	"github.com/riandigitalent/microservice1/auth/handler"
 )
 
 func main() {
