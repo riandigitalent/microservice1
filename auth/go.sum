@@ -1,0 +1,5 @@
+github.com/gorilla/mux v1.8.0 h1:i40aqfkR1h2SlN9hojwV5ZA91wcXFOvkdNIeFDP5koI=
+github.com/gorilla/mux v1.8.0/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
+github.com/riandigitalent/microservice1 v0.0.0-20201015185900-e3be8d4f724a h1:lEqynyMpdgXnhGEr9T0XAqyD8ea/Y5Erb7ih8nivRTo=
+github.com/riandigitalent/microservice1/utils v0.0.0-20201015171351-a186f62a2fa5 h1:dMpM7JAcsS1+2qPnPA2FYP9VZUe7Q1ISZWlURz70hIQ=
+github.com/riandigitalent/microservice1/utils v0.0.0-20201015171351-a186f62a2fa5/go.mod h1:if2xlWL51o4MDBfMwwSxLgUOYbSxWHM8vm6BZG3uu5w=
