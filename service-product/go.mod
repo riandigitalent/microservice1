@@ -7,4 +7,5 @@ require (
 	github.com/riandigitalent/microservice1/utils v0.0.0-20201015171351-a186f62a2fa5
 	github.com/spf13/viper v1.7.1
 	github.com/wskurniawan/intro-microservice/service-product v0.0.0-20201014173535-d19509851baa
+	gorm.io/gorm v1.20.2
 )
