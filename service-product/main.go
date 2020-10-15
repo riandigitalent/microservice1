@@ -7,8 +7,11 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/riandigitalent/microservice1/service-product/config"
+	"github.com/riandigitalent/microservice1/service-product/database"
 	"github.com/riandigitalent/microservice1/service-product/handler"
 	"github.com/spf13/viper"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -18,9 +21,13 @@ func main() {
 		return
 	}
 
+	db, err := initDB(cfg.Database)
+
 	router := mux.NewRouter()
 
-	router.Handle("/add-product", http.HandlerFunc(handler.AddMenuHandler))
+	menuHandler := handler.Menu{Db: db}
+
+	router.Handle("/add-menu", http.HandlerFunc(menuHandler.AddMenu))
 
 	fmt.Printf("Server listen on :%s", cfg.Port)
 	log.Panic(http.ListenAndServe(fmt.Sprintf(":%s", cfg.Port), router))
@@ -42,4 +49,19 @@ func getConfig() (config.Config, error) {
 	}
 
 	return cfg, nil
+}
+
+func initDB(dbConfig config.Database) (*gorm.DB, error) {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?%s", dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.DbName, dbConfig.Config)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.AutoMigrate(&database.Menu{})
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
 }
