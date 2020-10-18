@@ -7,7 +7,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/riandigitalent/microservice1/auth/config"
-	"github.com/riandigitalent/microservice1/auth/handler"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -29,7 +28,8 @@ func main() {
 		log.Println("sukses konek DB")
 	}
 
-	router.Handle("/admin-auth", http.HandlerFunc(handler.ValidateAuth))
+	router.Handle("/auth/signup", http.HandlerFunc(authHandler.SignUp))
+	router.Handle("/auth/login", http.HandlerFunc(authHandler.Login))
 
 	fmt.Printf("Auth service listen on :8001")
 	log.Panic(http.ListenAndServe(":8001", router))
