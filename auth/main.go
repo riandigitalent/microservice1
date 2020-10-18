@@ -22,15 +22,16 @@ func main() {
 	}
 	router := mux.NewRouter()
 
-	_, err = initDB(cfg.Database)
+	db, err := initDB(cfg.Database)
+	authHandler := handler.Auth{Db: db}
 	if err != nil {
 		log.Println(err.Error())
 	} else {
 		log.Println("sukses konek DB")
 	}
-	router.Handle("/admin-auth", http.HandlerFunc(handler.ValidateAuth))
-	//router.Handle("/auth/signup", http.HandlerFunc(authHandler.SignUp))
-	//router.Handle("/auth/login", http.HandlerFunc(authHandler.Login))
+	//router.Handle("/admin-auth", http.HandlerFunc(handler.ValidateAuth))
+	router.Handle("/auth/signup", http.HandlerFunc(authHandler.SignUp))
+	router.Handle("/auth/login", http.HandlerFunc(authHandler.Login))
 
 	fmt.Printf("Auth service listen on :8001")
 	log.Panic(http.ListenAndServe(":8001", router))

@@ -7,8 +7,6 @@ import (
 
 	"github.com/riandigitalent/microservice1/auth/database"
 	"github.com/riandigitalent/microservice1/auth/utils"
-
-	//"github.com/riandigitalent/microservice1/auth/utils/"
 	"gorm.io/gorm"
 )
 
@@ -21,18 +19,15 @@ func ValidateAuth(w http.ResponseWriter, r *http.Request) {
 		utils.WrapAPIError(w, r, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		return
 	}
-
 	authToken := r.Header.Get("Authorization")
 	if authToken == "" {
 		utils.WrapAPIError(w, r, "Invalid auth", http.StatusForbidden)
 		return
 	}
-
 	if authToken != "asdfghjk" {
 		utils.WrapAPIError(w, r, "Invalid auth", http.StatusForbidden)
 		return
 	}
-
 	utils.WrapAPISuccess(w, r, "success", 200)
 }
 
@@ -94,6 +89,7 @@ func (db *Auth) Login(w http.ResponseWriter, r *http.Request) {
 		utils.WrapAPIError(w, r, "error unmarshal : "+err.Error(), http.StatusInternalServerError)
 		return
 	}
+
 	//TODO LOGIN - Buat dapetin token
 	utils.WrapAPIData(w, r, database.Auth{
 		Username: res.Username,
