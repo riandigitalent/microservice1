@@ -6,7 +6,9 @@ import (
 	"net/http"
 
 	"github.com/riandigitalent/microservice1/auth/database"
-	"github.com/riandigitalent/microservice1/auth/utils/"
+	"github.com/riandigitalent/microservice1/auth/utils"
+
+	//"github.com/riandigitalent/microservice1/auth/utils/"
 	"gorm.io/gorm"
 )
 
