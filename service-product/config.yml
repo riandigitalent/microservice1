@@ -1,4 +1,6 @@
 port: 8000
+auth_service:
+  host: "http://localhost:8001"
 database:
   driver: "mysql"
   host: "localhost"

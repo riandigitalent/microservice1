@@ -14,24 +14,27 @@ type Auth struct {
 	Db *gorm.DB
 }
 
-func ValidateAuth(w http.ResponseWriter, r *http.Request) {
+func (db *Auth) ValidateAuth(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		utils.WrapAPIError(w, r, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		return
 	}
+
 	authToken := r.Header.Get("Authorization")
-	if authToken == "" {
-		utils.WrapAPIError(w, r, "Invalid auth", http.StatusForbidden)
+
+	res, err := database.Validate(authToken, db.Db)
+	if err != nil {
+		utils.WrapAPIError(w, r, err.Error(), http.StatusForbidden)
 		return
 	}
-	if authToken != "asdfghjk" {
-		utils.WrapAPIError(w, r, "Invalid auth", http.StatusForbidden)
-		return
-	}
-	utils.WrapAPISuccess(w, r, "success", 200)
+
+	utils.WrapAPIData(w, r, database.Auth{
+		Username: res.Username,
+		Token:    res.Token,
+	}, http.StatusOK, "success")
+	return
 }
 
-//TODO SIGNUP - Buat generate token disimpen ke database
 func (db *Auth) SignUp(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		utils.WrapAPIError(w, r, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
@@ -90,7 +93,6 @@ func (db *Auth) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//TODO LOGIN - Buat dapetin token
 	utils.WrapAPIData(w, r, database.Auth{
 		Username: res.Username,
 		Token:    res.Token,
