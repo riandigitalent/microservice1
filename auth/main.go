@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/riandigitalent/microservice1/auth/config"
+	"github.com/riandigitalent/microservice1/auth/database"
 	"github.com/riandigitalent/microservice1/auth/handler"
 	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
@@ -62,6 +63,7 @@ func initDB(cfg config.Database) (*gorm.DB, error) {
 		return nil, err
 	}
 
+	err = db.AutoMigrate(&database.Auth{})
 	if err != nil {
 		return nil, err
 	}

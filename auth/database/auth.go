@@ -38,10 +38,9 @@ func (auth *Auth) SignUp(db *gorm.DB) error {
 			if err := db.Create(auth).Error; err != nil {
 				return err
 			}
-		} else {
-			return err
 		}
+	} else {
+		return errors.Errorf("Duplicate Username")
 	}
-
 	return nil
 }
